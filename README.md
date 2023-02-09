@@ -45,6 +45,6 @@ Note: This program was developed using Node.js, so Node.js must be installed on 
 
 ## Contact-Details
 
-linkedin: ://www.linkedin.com/in/kayhan-mamak-5423b4262/
-Github: https://github.com/byunn90
-Email: Kayhan_mamak@hotmail.com
+1. linkedin: ://www.linkedin.com/in/kayhan-mamak-5423b4262/
+2. Github: https://github.com/byunn90
+3. Email: Kayhan_mamak@hotmail.com
