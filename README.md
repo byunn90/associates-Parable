@@ -1,2 +1,5 @@
 # associates-Parable
-Asscoiates
+
+## Description
+
+## Technologies Used:
