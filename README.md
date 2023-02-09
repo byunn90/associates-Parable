@@ -6,12 +6,12 @@ This program is a team roster generator for a company, using classes and Node.js
 
 ## Technologies Used:
 
-Node.js
-JavaScript
-Jest.js
-HTML
-CSS/Bootstrap
-Inquirer.js
+1. Node.js
+2. JavaScript
+3. Jest.js
+4. HTML
+5. CSS/Bootstrap
+6. Inquirer.js
 
 ## Installation:
 
