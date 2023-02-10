@@ -55,7 +55,7 @@ const promptUser = () => {
   ]);
 };
 
-const generateHTML = (employeeArray) =>
+const generateHTML = ({ id, name, email, role, github, school }) =>
   `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,9 +69,6 @@ const generateHTML = (employeeArray) =>
     <h2 class="text-primary p-5">Create your companies roster</h2>
   </header>
   <header class="p-5 mb-4 header bg-light">
-  ${employeeArray
-    .map(
-      ({ id, name, email, role, github, school }) => `
     <div class="card mx-auto" style="width: 18rem;">
       <div class="card-body">
       <h3 class="display-4" style="font-size:15px;">ID: ${id}</h3>
@@ -91,14 +88,11 @@ const generateHTML = (employeeArray) =>
       <li class="list-group-item" style="${
         role === "Engineer" || role === "Manager" ? "display: none;" : ""
       }">School: ${
-        role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
-      }</li> 
+    role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
+  }</li> 
         </ul>
       </div>
     </div>
-  `
-    )
-    .join("")}
   </header>
 </body>
 </html>`;
