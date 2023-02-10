@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const { writeFile } = require("fs").promises;
+const employees = [];
 // const Employee = require("./lib/Employee");
 // const Manager = require("./Manager");
 // const Engineer = require("./Engineer");
@@ -54,7 +55,7 @@ const promptUser = () => {
   ]);
 };
 
-const generateHTML = ({ id, name, email, role, github, school }) =>
+const generateHTML = (employeeArray) =>
   `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,6 +69,9 @@ const generateHTML = ({ id, name, email, role, github, school }) =>
     <h2 class="text-primary p-5">Create your companies roster</h2>
   </header>
   <header class="p-5 mb-4 header bg-light">
+  ${employeeArray
+    .map(
+      ({ id, name, email, role, github, school }) => `
     <div class="card mx-auto" style="width: 18rem;">
       <div class="card-body">
       <h3 class="display-4" style="font-size:15px;">ID: ${id}</h3>
@@ -87,22 +91,39 @@ const generateHTML = ({ id, name, email, role, github, school }) =>
       <li class="list-group-item" style="${
         role === "Engineer" || role === "Manager" ? "display: none;" : ""
       }">School: ${
-    role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
-  }</li> 
+        role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
+      }</li> 
         </ul>
       </div>
     </div>
+  `
+    )
+    .join("")}
   </header>
 </body>
 </html>`;
 
-const init = () => {
+const addEmployee = () => {
   promptUser()
-    // Use writeFile method imported from fs.promises to use promises instead of
-    // a callback function
     .then((answers) => writeFile("./dist/index.html", generateHTML(answers)))
-    .then(() => console.log("Successfully wrote to index.html"))
+    .then(() => {
+      inquirer
+        .prompt([
+          {
+            type: "confirm",
+            name: "addMore",
+            message: "Do you want to add more employees?",
+          },
+        ])
+        .then((response) => {
+          if (response.addMore) {
+            addEmployee();
+          } else {
+            console.log("Roster generation complete.");
+          }
+        });
+    })
     .catch((err) => console.error(err));
 };
 
-init();
+addEmployee();
