@@ -1,5 +1,9 @@
 const inquirer = require("inquirer");
 const { writeFile } = require("fs").promises;
+// const Employee = require("./lib/Employee");
+// const Manager = require("./Manager");
+// const Engineer = require("./Engineer");
+// const Intern = require("./Intern");
 /*
 function to generate employee's {
   we have to use node.js to create employees 
@@ -28,10 +32,29 @@ const promptUser = () => {
       name: "email",
       message: "what is your email address?",
     },
+    {
+      type: "list",
+      name: "role",
+      message: "whats is your role?",
+      choices: ["Engineer", "Intern", "Manager"],
+    },
+    {
+      type: "input",
+      name: "github",
+      message: "What is your github?",
+      when: (answers) => answers.role === "Engineer",
+    },
+    {
+      type: "input",
+      name: "school",
+      message:
+        "What is the name of the school you are attending (Intern only)?",
+      when: (answers) => answers.role === "Intern",
+    },
   ]);
 };
 
-const generateHTML = ({ id, name, email }) =>
+const generateHTML = ({ id, name, email, role, github, school }) =>
   `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,15 +64,31 @@ const generateHTML = ({ id, name, email }) =>
   <title>Document</title>
 </head>
 <body>
+   <header class="header bg-light text-center">
+    <h2 class="text-primary p-5">Create your companies roster</h2>
+  </header>
   <header class="p-5 mb-4 header bg-light">
-    <div class="container">
-      <h1 class="display-4">Hi! my ID ${id} and My name is ${name}</h1>
-      <p class="lead">This is my email address ${email}.</p>
-      <h3>Example heading <span class="badge bg-secondary">Contact Me</span></h3>
-      <ul class="list-group">
-        <li class="list-group-item">My GitHub username is </li>
-        <li class="list-group-item">LinkedIn:</li>
-      </ul>
+    <div class="card mx-auto" style="width: 18rem;">
+      <div class="card-body">
+      <h3 class="display-4" style="font-size:15px;">ID: ${id}</h3>
+      <h3 class="display-4" style="font-size:15px;">Role: ${role}</h3>
+      <h3 class="display-4" style="font-size:15px;">Name: ${name}</h3>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="mailto:${email}" class="text-primary">
+              My Email
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="https://github.com/${github}" class="text-primary">
+              My GitHub
+            </a>
+          </li>
+          <li class="list-group-item">School: ${
+            role === "Engineer" ? "NA" : school
+          }</li>
+        </ul>
+      </div>
     </div>
   </header>
 </body>
