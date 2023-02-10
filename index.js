@@ -84,9 +84,11 @@ const generateHTML = ({ id, name, email, role, github, school }) =>
               My GitHub
             </a>
           </li>
-          <li class="list-group-item">School: ${
-            role === "Engineer" ? "NA" : school
-          }</li>
+      <li class="list-group-item" style="${
+        role === "Engineer" || role === "Manager" ? "display: none;" : ""
+      }">School: ${
+    role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
+  }</li> 
         </ul>
       </div>
     </div>
