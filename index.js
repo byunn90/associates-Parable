@@ -3,7 +3,7 @@ const fs = require("fs");
 // const employeeObject = require("./lib/Employees");
 const { writeFile } = require("fs").promises;
 
-const employees = [];
+// const employees = [];
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -36,6 +36,12 @@ const promptUser = () => {
     },
     {
       type: "input",
+      name: "officeNumber",
+      message: "What is your office Number?",
+      when: (answers) => answers.role === "Manager",
+    },
+    {
+      type: "input",
       name: "school",
       message:
         "What is the name of the school you are attending (Intern only)?",
@@ -59,8 +65,8 @@ const generateHTML = (users) =>
   </header>
   <div class="d-flex justify-content-center">
   <div class="card-group">
-  ${users.map(({ id, role, name, email, github, school }) => {
-    return `<div class="card mx-auto" style="width: 18rem;">
+  ${users.map(({ id, role, name, email, github, school, officeNumber }) => {
+    return `<div class="card mx-4" style="width: 18rem;">
       <div class="card-body">
       <h3 class="display-4" style="font-size:15px;">ID: ${id}</h3>
       <h3 class="display-4" style="font-size:15px;">Role: ${role}</h3>
@@ -75,11 +81,15 @@ const generateHTML = (users) =>
             <a href="https://github.com/${github}" class="text-primary">
               My GitHub
             </a>
-          </li>
       <li class="list-group-item" style="${
         role === "Engineer" || role === "Manager" ? "display: none;" : ""
       }">School: ${
-      role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
+      role === "Intern" ? `${school}` : role === "Manager" ? "NA" : "NA"
+    }</li> 
+        <li class="list-group-item" style="${
+          role === "Intern" || role === "Engineer" ? "display: none;" : ""
+        }">OfficeNumber: ${
+      role === "Manager" ? `${officeNumber}` : role === "Manager" ? "NA" : "NA"
     }</li> 
         </ul>
       </div>
@@ -107,14 +117,6 @@ const addEmployee = () => {
         addEmployee();
       } else {
         const html = generateHTML(newUsers);
-
-        const employeeObject = new Employee(
-          response.id,
-          response.name,
-          response.email,
-          response.github
-        );
-        console.log(employeeObject);
         fs.writeFile("./dist/index.html", html, (err) => {
           if (err) {
             console.error(err);
