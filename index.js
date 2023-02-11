@@ -1,20 +1,7 @@
 const inquirer = require("inquirer");
+const fs = require("fs");
 const { writeFile } = require("fs").promises;
 const employees = [];
-// const Employee = require("./lib/Employee");
-// const Manager = require("./Manager");
-// const Engineer = require("./Engineer");
-// const Intern = require("./Intern");
-/*
-function to generate employee's {
-  we have to use node.js to create employees 
-  takes a input with inqurerier 
-  name
-  email address
-  id
-}
-
-*/
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -55,7 +42,7 @@ const promptUser = () => {
   ]);
 };
 
-const generateHTML = ({ id, name, email, role, github, school }) =>
+const generateHTML = (users) =>
   `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,8 +55,10 @@ const generateHTML = ({ id, name, email, role, github, school }) =>
    <header class="header bg-light text-center">
     <h2 class="text-primary p-5">Create your companies roster</h2>
   </header>
-  <header class="p-5 mb-4 header bg-light">
-    <div class="card mx-auto" style="width: 18rem;">
+  <div class="d-flex justify-content-center">
+  <div class="card-group">
+  ${users.map(({ id, role, name, email, github, school }) => {
+    return `<div class="card mx-auto" style="width: 18rem;">
       <div class="card-body">
       <h3 class="display-4" style="font-size:15px;">ID: ${id}</h3>
       <h3 class="display-4" style="font-size:15px;">Role: ${role}</h3>
@@ -88,36 +77,43 @@ const generateHTML = ({ id, name, email, role, github, school }) =>
       <li class="list-group-item" style="${
         role === "Engineer" || role === "Manager" ? "display: none;" : ""
       }">School: ${
-    role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
-  }</li> 
+      role === "Engineer" ? "NA" : role === "Manager" ? "NA" : "NA"
+    }</li> 
         </ul>
       </div>
-    </div>
-  </header>
+    </div>`;
+  })}
+  </div>
+  </div>
 </body>
 </html>`;
-
+const newUsers = [];
 const addEmployee = () => {
   promptUser()
-    .then((answers) => writeFile("./dist/index.html", generateHTML(answers)))
-    .then(() => {
-      inquirer
-        .prompt([
-          {
-            type: "confirm",
-            name: "addMore",
-            message: "Do you want to add more employees?",
-          },
-        ])
-        .then((response) => {
-          if (response.addMore) {
-            addEmployee();
+    .then((user) => {
+      newUsers.push(user);
+      return inquirer.prompt([
+        {
+          type: "confirm",
+          name: "addMore",
+          message: "Do you want to add more employees?",
+        },
+      ]);
+    })
+    .then((response) => {
+      if (response.addMore) {
+        addEmployee();
+      } else {
+        const html = generateHTML(newUsers);
+        fs.writeFile("./dist/index.html", html, (err) => {
+          if (err) {
+            console.error(err);
           } else {
             console.log("Roster generation complete.");
           }
         });
+      }
     })
     .catch((err) => console.error(err));
 };
-
 addEmployee();
