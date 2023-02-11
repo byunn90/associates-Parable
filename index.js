@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+// const employeeObject = require("./lib/Employees");
 const { writeFile } = require("fs").promises;
+
 const employees = [];
 
 const promptUser = () => {
@@ -105,6 +107,14 @@ const addEmployee = () => {
         addEmployee();
       } else {
         const html = generateHTML(newUsers);
+
+        const employeeObject = new Employee(
+          response.id,
+          response.name,
+          response.email,
+          response.github
+        );
+        console.log(employeeObject);
         fs.writeFile("./dist/index.html", html, (err) => {
           if (err) {
             console.error(err);
