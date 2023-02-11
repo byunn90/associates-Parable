@@ -10,7 +10,7 @@ describe("Itern", () => {
     );
     expect(intern.name).toBe(myName);
   });
-  it("Must have the correct properties and method ID", () => {
+  it("Must have the correct properties as method ID", () => {
     const myID = 2255;
     const intern = new Intern(
       "Kayhan",
