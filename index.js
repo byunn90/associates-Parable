@@ -1,10 +1,5 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-// const employeeObject = require("./lib/Employees");
-const { writeFile } = require("fs").promises;
-
-// const employees = [];
-
 const promptUser = () => {
   return inquirer.prompt([
     {
@@ -64,9 +59,10 @@ const generateHTML = (users) =>
     <h2 class="text-primary p-5">Create your companies roster</h2>
   </header>
   <div class="d-flex justify-content-center">
-  <div class="card-group">
   ${users.map(({ id, role, name, email, github, school, officeNumber }) => {
-    return `<div class="card mx-4" style="width: 18rem;">
+    return `<div class="card-group">
+    <div class="card mx-4" style="width: 18rem;">
+     
       <div class="card-body">
       <h3 class="display-4" style="font-size:15px;">ID: ${id}</h3>
       <h3 class="display-4" style="font-size:15px;">Role: ${role}</h3>
@@ -125,7 +121,6 @@ const addEmployee = () => {
           }
         });
       }
-    })
-    .catch((err) => console.error(err));
+    });
 };
 addEmployee();
