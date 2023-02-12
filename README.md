@@ -1,5 +1,7 @@
 # 🏆 associates-Parable
 
+![alt text](<./images/Screenshot%20(49).png>)
+
 ## Description
 
 This program is a team roster generator for a company, using classes and Node.js. It includes four different classes: Employee, Manager, Engineer, and Intern. The Employee class acts as the parent class, defining basic properties and methods, such as name, id, email, and functions to retrieve this information. The other classes extend the Employee class, inheriting its properties and methods, and adding their own specific properties and methods. The program uses inquirer to prompt the user for the details of each employee, and then writes the generated team roster to an HTML file using the fs.promises.writeFile method. The use of classes and inheritance allows for clear and organized structure, as well as ease of expansion and modification.
