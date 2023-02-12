@@ -33,6 +33,8 @@ Note: The program uses Jest for testing, and the necessary tests are included in
 
 ## tests
 
+Tests where done by jest module
+
 ## Usage
 
 1. Clone or download the repository to your local machine.
